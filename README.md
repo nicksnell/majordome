@@ -2,7 +2,7 @@
 
 > Github Pull Request notification utility
 
-![Notification](docs/notification.jpg)
+![Notification](assets/notification.jpg)
 
 Majordome is a simple cli program to generate notifications if you have
 open/outstanding pull-request reviews on Github. It can also be used to
