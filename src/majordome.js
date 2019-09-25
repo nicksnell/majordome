@@ -1,5 +1,5 @@
 /**
- * "Mayordomo" (Spanish for Butler...)
+ * "Majordome" (French for Butler...)
  *
  * Github pull request notifications...
  */
