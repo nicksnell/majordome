@@ -1,7 +1,9 @@
+#!/usr/bin/env node
+
 /**
  * "Majordome" (French for Butler...)
  *
- * Github pull request notifications...
+ * @overview Github pull request notifications tool...
  */
 
 const fs = require('fs')
@@ -16,10 +18,13 @@ const notifier = require('node-notifier')
 const version = require('../package.json').version
 
 function getClient () {
-  const TOKEN = fs.readFileSync(path.join(os.homedir(), '.github'), 'utf8')
+  const TOKEN = fs.readFileSync(
+    path.join(os.homedir(), '.github'),
+    'utf8'
+  )
   return Octokit({
     auth: TOKEN.trim(),
-    userAgent: `Mayordomo/${version}`
+    userAgent: `Majordome/${version}`
   })
 }
 
@@ -35,8 +40,10 @@ function getAge (date) {
   return dayjs().diff(date, 'days')
 }
 
-async function search () {
-  const octokit = getClient()
+async function search (octokit=null) {
+  if (!octokit) {
+    octokit = getClient()
+  }
   const user = await octokit.users.getAuthenticated()
   const loginName = user.data['login']
 
@@ -47,11 +54,16 @@ async function search () {
   return results
 }
 
+function print (msg) {
+  console.log(msg)
+}
+
 program
   .version(version)
 
 program
   .command('check')
+  .description('check for open pull requests requiring a review')
   .action(async () => {
     const results = await search()
     const count = results.data.total_count
@@ -68,8 +80,10 @@ program
 
 program
   .command('list')
+  .description('display all open pull requests requiring a review')
   .action(async () => {
-    const results = await search()
+    const octokit = getClient()
+    const results = await search(octokit)
     const repos = {}
 
     for (const item of results.data.items) {
@@ -95,16 +109,16 @@ program
     }
 
     Object.entries(repos).forEach(([repo, prs]) => {
-      console.log(chalk.bold.inverse(`[${repo}]`))
+      print(chalk.bold.inverse(`[${repo}]`))
 
       prs.forEach((pr) => {
         const age = getAge(pr.updated)
 
         if (terminalLink.isSupported) {
           const link = terminalLink(`${pr.title} (${age} days)`, pr.url)
-          console.log(link)
+          print(link)
         } else {
-          console.log(`${pr.title} - ${age} days - ${pr.url}`)
+          print(`${pr.title} - ${age} days - ${pr.url}`)
         }
       })
 

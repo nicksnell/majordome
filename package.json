@@ -10,7 +10,7 @@
     "test": "jest"
   },
   "bin": {
-    "mayordomo": "src/majordome.js"
+    "majordome": "src/majordome.js"
   },
   "repository": {
     "type": "git",
