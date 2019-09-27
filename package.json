@@ -1,6 +1,6 @@
 {
   "name": "majordome",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Github Pull Request notificaiton bot",
   "main": "src/majordome.js",
   "scripts": {
@@ -31,6 +31,8 @@
     "commander": "^3.0.1",
     "dayjs": "^1.8.16",
     "node-notifier": "^6.0.0",
+    "opn": "^6.0.0",
+    "plist": "^3.0.1",
     "terminal-link": "^2.0.0"
   },
   "devDependencies": {
