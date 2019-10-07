@@ -156,13 +156,13 @@ program
       `Library/LaunchAgents/${key}.plist`
     )
     const plistOutput = {
-      'Label': key,
-      'ProgramArguments': [
+      Label: key,
+      ProgramArguments: [
         process.execPath,
         __filename,
         'check'
       ],
-      'StartInterval': parseInt(options.interval)
+      StartInterval: parseInt(options.interval)
     }
     const plistXml = plist.build(plistOutput)
     fs.writeFileSync(lauchctrlFile, plistXml)
